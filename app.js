@@ -13,5 +13,63 @@
 const array = [10, 0, 90, 80, 50, 0, 60];
 
 
+const mapStudentsDate = function (array, studentId) {
+    return array.map(function (score, index) {
+        return {
+            score: score,
+            activityId: index,
+            studentId: studentId,
+        }
+    })
+}
+
+const removeLowestScore = (array) => {
+    const min = Math.min(...array.map(item => item.score));
+    return array.filter(item => item.score !== min);
+}
+const removeLowestUsingReduceScore = (array) => {
+    let min = Math.min(...array.map(item => item.score));
+    return array.reduce(function (result, item) {
+        if (item.score !== min) {
+            return [...result, item];
+        }
+        if (item.score === min) {
+            min = null;
+            return result;
+        }
+    }, []);
+}
+const removeLowestUsingIndexOf = (array) => {
+    const min = Math.min(...array.map(item => item.score));
+    const newArray = [...array];
+    newArray.splice(array.findIndex(item => item.score === min), 1);
+    return newArray;
+}
+const sumScores = items => items.reduce((total, item) => total + item.score, 0)
+
+const computeAverage = items => sumScores(items) / items.length
+
+const filterZerosScore = function (array) {
+    return array.filter(item => item.score === 0);
+}
+
+const fullData = mapStudentsDate(array, 3000);
+const lowValueRemoved = removeLowestUsingIndexOf(fullData);
+const highAverage = computeAverage(lowValueRemoved);
+const lowAverage = computeAverage(fullData);
+const zeroAssignments = filterZerosScore(fullData);
+
+const pipe = function (...fns) {
+    return function (x) {
+        return fns.reduce(function (v, f) {
+            return f(v);
+        }, x);
+    }
+};
+
+const highAverageWithCompositeWay = pipe(
+    removeLowestUsingIndexOf,
+    computeAverage
+)(fullData);
 
 
