@@ -72,4 +72,9 @@ const highAverageWithCompositeWay = pipe(
     computeAverage
 )(fullData);
 
+// libs
+// https://github.com/functionaljs/functional-js
+// https://immutable-js.com
+// https://ramdajs.com
+// https://lodash.com
 
